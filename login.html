@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ElectroMart - Login</title>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    .auth-buttons {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+    }
+    
+    .login-btn, .register-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+    
+    .login-btn {
+      background: #007bff;
+      color: white;
+    }
+    
+    .login-btn:hover {
+      background: #0056b3;
+      transform: translateY(-1px);
+    }
+    
+    .login-btn.active {
+      background: #0056b3;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+    
+    .register-btn {
+      background: transparent;
+      color: #007bff;
+      border-color: #007bff;
+    }
+    
+    .register-btn:hover {
+      background: #007bff;
+      color: white;
+      transform: translateY(-1px);
+    }
+    
+    .register-btn.active {
+      background: #007bff;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <img src="assets/images/Logo.jpg" alt="ElectroMart Logo" class="logo">
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="cart.html">Cart (<span class="cart-count">0</span>)</a></li>
+        <li><a href="About.html">About</a></li>
+        <li class="auth-buttons">
+          <a href="login.html" class="login-btn active">Login</a>
+          <a href="register.html" class="register-btn">Register</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Login Section -->
+  <section class="auth-section">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>Welcome Back!</h2>
+          <p>Sign in to your ElectroMart account</p>
+        </div>
+        
+        <form class="auth-form" id="loginForm">
+          <div class="form-group">
+            <label for="email">
+              <i class="fas fa-envelope"></i>
+              Email Address
+            </label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              required
+            >
+            <span class="error-message" id="emailError"></span>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">
+              <i class="fas fa-lock"></i>
+              Password
+            </label>
+            <div class="password-input">
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter your password" 
+                required
+              >
+              <button type="button" class="password-toggle" onclick="togglePassword()">
+                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+              </button>
+            </div>
+            <span class="error-message" id="passwordError"></span>
+          </div>
+          
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="rememberMe">
+              <span class="checkmark"></span>
+              Remember me
+            </label>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+          
+          <button type="submit" class="auth-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            Sign In
+          </button>
+          
+          <div class="auth-divider">
+            <span>or</span>
+          </div>
+          
+          <div class="social-login">
+            <button type="button" class="social-btn google-btn">
+              <i class="fab fa-google"></i>
+              Continue with Google
+            </button>
+            <button type="button" class="social-btn facebook-btn">
+              <i class="fab fa-facebook-f"></i>
+              Continue with Facebook
+            </button>
+          </div>
+        </form>
+        
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="register.html">Sign up here</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 ElectroMart. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="auth.js"></script>
+  <script src="assets/js/SCR.JS"></script>
+</body>
+</html>

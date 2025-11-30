@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ElectroMart - Products</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/professional.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Floating Cart Button -->
+  <button class="floating-cart-btn" onclick="showCartModal()" id="floatingCartBtn">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count-badge" id="floatingCartCount">0</span>
+  </button>
+
+  <!-- Professional Header -->
+  <header class="professional-header" id="mainHeader">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="assets/images/Logo.jpg" alt="ElectroMart Logo" class="logo">
+        <div class="brand-text">ElectroMart</div>
+      </div>
+      
+      <nav class="professional-nav">
+        <ul class="nav-links">
+          <li><a href="index.html">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+          </a></li>
+          <li><a href="products.html" class="active">
+            <i class="fas fa-box"></i>
+            <span>Products</span>
+          </a></li>
+          <li><a href="cart.html" class="cart-link">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Cart</span>
+            <span class="cart-count cart-badge">0</span>
+          </a></li>
+          <li><a href="wishlist.html" class="wishlist-link">
+            <i class="fas fa-heart"></i>
+            <span>Wishlist</span>
+            <span class="wishlist-badge">0</span>
+          </a></li>
+          <li><a href="About.html">
+            <i class="fas fa-info-circle"></i>
+            <span>About</span>
+          </a></li>
+          <li><a href="login.html" class="auth-link login-link">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+          </a></li>
+          <li><a href="register.html" class="auth-link register-link">
+            <i class="fas fa-user-plus"></i>
+            <span>Register</span>
+          </a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Search Bar -->
+  <section class="search-container">
+    <input type="text" id="searchBar" placeholder="Search products...">
+  </section>
+
+  <!-- Cart Limits Info -->
+  <section class="cart-limits-info">
+    <div class="limits-container">
+      <div class="limits-header">
+        <h3><i class="fas fa-info-circle"></i> Order Limits</h3>
+        <div class="cart-actions">
+          <button onclick="testAddToCart()" class="test-cart-btn">
+            <i class="fas fa-bug"></i>
+            Test Cart
+          </button>
+          <button onclick="clearCart()" class="clear-cart-btn">
+            <i class="fas fa-trash"></i>
+            Clear Cart
+          </button>
+        </div>
+      </div>
+      <div class="limits-grid">
+        <div class="limit-item">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Max Items: <strong>10</strong></span>
+        </div>
+        <div class="limit-item">
+          <i class="fas fa-box"></i>
+          <span>Max Quantity per Item: <strong>5</strong></span>
+        </div>
+        <div class="limit-item">
+          <i class="fas fa-rupee-sign"></i>
+          <span>Min Order: <strong>₹1,000</strong></span>
+        </div>
+        <div class="limit-item">
+          <i class="fas fa-credit-card"></i>
+          <span>Max Transaction: <strong>₹50,000</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Preview Modal -->
+  <div id="cartModal" class="cart-modal">
+    <div class="cart-modal-content">
+      <div class="cart-modal-header">
+        <h3><i class="fas fa-shopping-cart"></i> Cart Preview</h3>
+        <button class="close-cart-modal" onclick="closeCartModal()">&times;</button>
+      </div>
+      <div class="cart-modal-body" id="cartModalBody">
+        <!-- Cart items will be displayed here -->
+      </div>
+      <div class="cart-modal-footer">
+        <button class="btn-secondary" onclick="closeCartModal()">Continue Shopping</button>
+        <button class="btn-primary" onclick="goToCart()">View Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <main class="product-grid container">
+
+    <!-- Product 1 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/LED TV.webp" alt="Smart LED TV" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Smart LED TV', 25999, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Smart LED TV</h3>
+        <p class="price">₹25,999</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Smart LED TV', 25999, 'assets/images/LED TV.webp')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/Oven.jpg" alt="Microwave Oven" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Microwave Oven', 1780, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Microwave Oven</h3>
+        <p class="price">₹1,780</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Microwave Oven', 1780, 'assets/images/Oven.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/washing.jpg.jpg" alt="Washing Machine" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Washing Machine', 20990, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Washing Machine</h3>
+        <p class="price">₹20,990</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Washing Machine', 20990, 'assets/images/washing.jpg.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 4 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/mp.jpg.jpg" alt="Mobile Phones" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Mobile Phones', 59990, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Mobile Phones</h3>
+        <p class="price">₹59,990</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Mobile Phones', 59990, 'assets/images/mp.jpg.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 5 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/laptop.jpg" alt="Laptop" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Laptop', 61990, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Laptop</h3>
+        <p class="price">₹61,990</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Laptop', 61990, 'assets/images/laptop.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 6 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/refrigerator.jpg" alt="Refrigerator" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Refrigerator', 21890, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Refrigerator</h3>
+        <p class="price">₹21,890</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Refrigerator', 21890, 'assets/images/refrigerator.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 7 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/tv.jpg" alt="Smart TV" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Smart TV 55 Inch', 32999, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Smart TV 55"</h3>
+        <p class="price">₹32,999</p>
+        <div class="rating">⭐⭐⭐⭐⭐</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Smart TV 55 Inch', 32999, 'assets/images/tv.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product 8 -->
+    <div class="product">
+      <div class="product-image-container">
+        <img src="assets/images/mobilephone.jpg" alt="Smartphone" class="product-image">
+        <button type="button" class="wishlist-btn" onclick="toggleWishlist('Smartphone', 18999, this)" title="Add to Wishlist">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h3>Smartphone</h3>
+        <p class="price">₹18,999</p>
+        <div class="rating">⭐⭐⭐⭐☆</div>
+        <div class="product-actions">
+          <button class="btn-primary" onclick="coreAddToCart('Smartphone', 18999, 'assets/images/mobilephone.jpg')">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 ElectroMart. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="auth.js"></script>
+  <script src="assets/js/wishlist.js"></script>
+  <script src="assets/js/SCR.JS"></script>
+  
+  <script>
+    // Cart and Wishlist Management
+    const CART_LIMITS = {
+      MAX_ITEMS_PER_ORDER: 10,
+      MAX_QUANTITY_PER_ITEM: 5,
+      MIN_ORDER_AMOUNT: 1000,
+      MAX_TRANSACTION_AMOUNT: 50000
+    };
+
+    // Initialize cart and wishlist
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeCart();
+      initializeWishlist();
+      updateCartDisplay();
+      updateHeaderCounts();
+      
+      // Sync cartItems to cart for consistency
+      try {
+        const legacyCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+        const modernCart = JSON.parse(localStorage.getItem('cart') || '[]');
+        if (legacyCart.length > 0 && modernCart.length === 0) {
+          // Migrate legacy to modern
+          const migrated = legacyCart.map(i => ({
+            id: i.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            name: i.name,
+            price: i.price,
+            quantity: i.quantity || 1,
+            image: i.image || ''
+          }));
+          localStorage.setItem('cart', JSON.stringify(migrated));
+          updateHeaderCounts();
+        }
+      } catch {}
+      
+      // Sync coreAddToCart to also update 'cart' key
+      if (window.coreAddToCart) {
+        const originalCoreAddToCart = window.coreAddToCart;
+        window.coreAddToCart = function(name, price, image) {
+          originalCoreAddToCart(name, price, image);
+          // Sync cartItems to cart
+          try {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const cart = cartItems.map(i => ({
+              id: i.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+              name: i.name,
+              price: i.price,
+              quantity: i.quantity || 1,
+              image: i.image || ''
+            }));
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateHeaderCounts();
+          } catch {}
+        };
+      }
+      
+      // Test cart functionality
+      console.log('Cart initialized:', getCart());
+      console.log('Cart limits:', CART_LIMITS);
+    });
+
+    // Keep header cart/wishlist badges in sync across tabs/pages
+    function updateHeaderCounts() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const cartCount = cart.reduce((s,i)=> s + (i.quantity||1), 0);
+        document.querySelectorAll('.cart-badge, .cart-count').forEach(el => { el.textContent = cartCount; el.style.display = cartCount > 0 ? 'inline-block' : 'none'; });
+      } catch {}
+      try {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const wlCount = Array.isArray(wishlist) ? wishlist.length : 0;
+        document.querySelectorAll('.wishlist-badge, #wishlistCount').forEach(el => { el.textContent = wlCount; el.style.display = wlCount > 0 ? 'inline-block' : 'none'; });
+      } catch {}
+    }
+    window.addEventListener('storage', updateHeaderCounts);
+
+    function initializeCart() {
+      if (!localStorage.getItem('cart')) {
+        localStorage.setItem('cart', JSON.stringify([]));
+      }
+    }
+
+    function getWishlist() {
+      // Prefer shared key used by WishlistManager
+      return JSON.parse(localStorage.getItem('wishlist') || '[]');
+    }
+
+    function saveWishlist(items) {
+      localStorage.setItem('wishlist', JSON.stringify(items));
+      updateWishlistBadge(items.length);
+      // Also notify global manager if present
+      if (window.WishlistManager && typeof window.WishlistManager.updateWishlistDisplay === 'function') {
+        window.WishlistManager.updateWishlistDisplay();
+      }
+    }
+
+    function updateWishlistBadge(count) {
+      document.querySelectorAll('.wishlist-badge, #wishlistCount').forEach(el => { el.textContent = count; el.style.display = count > 0 ? 'inline-block' : 'none'; });
+    }
+
+    function initializeWishlist() {
+      const wishlistItems = getWishlist();
+      updateWishlistBadge(wishlistItems.length);
+
+      // Set initial filled hearts based on wishlist
+      document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        const productName = btn.closest('.product').querySelector('h3')?.textContent?.trim();
+        const icon = btn.querySelector('i');
+        if (!productName || !icon) return;
+        const inList = wishlistItems.some(x => x.name === productName);
+        if (inList) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+          btn.style.color = '#ef4444';
+        }
+      });
+
+      const wishlistLink = document.querySelector('.wishlist-link');
+      if (wishlistLink) {
+        wishlistLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          // Navigate later to dedicated page
+          showNotification('Wishlist page coming soon', 'info');
+        });
+      }
+    }
+
+    function getCart() {
+      return JSON.parse(localStorage.getItem('cart') || '[]');
+    }
+
+    function saveCart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      // Also sync to cartItems for compatibility with SCR.JS
+      try {
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+      } catch {}
+      updateCartDisplay();
+      updateHeaderCounts();
+    }
+
+    function updateCartDisplay() {
+      const cart = getCart();
+      const cartBadge = document.querySelector('.cart-badge');
+      const floatingCartCount = document.getElementById('floatingCartCount');
+      
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      
+      if (cartBadge) {
+        cartBadge.textContent = totalItems;
+      }
+      
+      if (floatingCartCount) {
+        floatingCartCount.textContent = totalItems;
+      }
+      
+      // Update cart status display
+      updateCartStatus();
+    }
+
+    function updateCartStatus() {
+      const cart = getCart();
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const uniqueItems = cart.length;
+      
+      // Create or update cart status display
+      let statusDisplay = document.getElementById('cart-status');
+      if (!statusDisplay) {
+        statusDisplay = document.createElement('div');
+        statusDisplay.id = 'cart-status';
+        statusDisplay.className = 'cart-status-display';
+        document.querySelector('.cart-limits-info').appendChild(statusDisplay);
+      }
+      
+      statusDisplay.innerHTML = `
+        <div class="status-item">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Items in Cart: <strong>${totalItems}/${CART_LIMITS.MAX_ITEMS_PER_ORDER}</strong></span>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-box"></i>
+          <span>Unique Products: <strong>${uniqueItems}/${CART_LIMITS.MAX_ITEMS_PER_ORDER}</strong></span>
+        </div>
+        <div class="status-item">
+          <i class="fas fa-rupee-sign"></i>
+          <span>Total Amount: <strong>₹${totalAmount.toLocaleString()}</strong></span>
+        </div>
+      `;
+    }
+
+    // Add to cart function with limits
+    function addToCart(productName, price, evt) {
+      console.log('Adding to cart:', productName, price); // Debug log
+      
+      const cart = getCart();
+      
+      // Check if product already exists in cart
+      const existingItem = cart.find(item => item.name === productName);
+      
+      if (existingItem) {
+        // Check quantity limit
+        if (existingItem.quantity >= CART_LIMITS.MAX_QUANTITY_PER_ITEM) {
+          showNotification(`Maximum ${CART_LIMITS.MAX_QUANTITY_PER_ITEM} items allowed per product!`, 'error');
+          return;
+        }
+        existingItem.quantity += 1;
+        showNotification(`${productName} quantity increased to ${existingItem.quantity}`, 'success');
+      } else {
+        // Check total items limit
+        if (cart.length >= CART_LIMITS.MAX_ITEMS_PER_ORDER) {
+          showNotification(`Maximum ${CART_LIMITS.MAX_ITEMS_PER_ORDER} different products allowed per order!`, 'error');
+          return;
+        }
+        
+        const card = evt?.target?.closest('.product');
+        const img = card ? card.querySelector('img')?.getAttribute('src') : '';
+        cart.push({
+          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+          name: productName,
+          price: price,
+          quantity: 1,
+          image: img || ''
+        });
+        showNotification(`${productName} added to cart!`, 'success');
+      }
+      
+      // Check transaction amount limit
+      const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      if (totalAmount > CART_LIMITS.MAX_TRANSACTION_AMOUNT) {
+        showNotification(`Transaction amount cannot exceed ₹${CART_LIMITS.MAX_TRANSACTION_AMOUNT.toLocaleString()}!`, 'error');
+        return;
+      }
+      
+      saveCart(cart);
+      updateHeaderCounts(); // sync badges immediately
+      
+      // Add visual feedback to the button
+      const button = (evt && evt.target ? evt.target : null) ? evt.target.closest('.btn-primary') : null;
+      if (button) {
+        button.style.background = '#10b981';
+        button.innerHTML = '<i class="fas fa-check"></i> Added!';
+        setTimeout(() => {
+          button.style.background = '';
+          button.innerHTML = '<i class="fas fa-shopping-cart"></i> Add to Cart';
+        }, 2000);
+      }
+      
+      console.log('Cart updated:', cart); // Debug log
+    }
+
+    // Toggle wishlist function
+    function toggleWishlist(productName, price, el) {
+      const wishlistBtn = el && el.classList ? el : null;
+      if (!wishlistBtn) return;
+      const icon = wishlistBtn.querySelector('i');
+      const card = wishlistBtn.closest('.product');
+      const img = card ? card.querySelector('img')?.getAttribute('src') : undefined;
+
+      // Shared storage key
+      let items = getWishlist();
+
+      // If global WishlistManager exists, use it to keep structure unified
+      if (window.WishlistManager && typeof window.WishlistManager.toggleWishlist === 'function') {
+        window.WishlistManager.toggleWishlist(productName, Number(price), img);
+        items = getWishlist();
+      } else {
+      const idx = items.findIndex(x => x.name === productName);
+      if (idx === -1) {
+          const item = {
+            id: Date.now().toString(),
+            name: productName,
+            price: Number(price),
+            image: img || 'assets/images/placeholder.jpg',
+            addedAt: new Date().toISOString()
+          };
+          items.push(item);
+        saveWishlist(items);
+        showNotification(`${productName} added to wishlist!`, 'success');
+      } else {
+        items.splice(idx, 1);
+        saveWishlist(items);
+        showNotification(`${productName} removed from wishlist!`, 'info');
+      }
+      }
+
+      // Update icon based on current state
+      if (icon) {
+        const inList = items.some(x => x.name === productName);
+        if (inList) {
+          icon.classList.remove('far');
+          icon.classList.add('fas');
+          wishlistBtn.style.color = '#ef4444';
+        } else {
+          icon.classList.remove('fas');
+          icon.classList.add('far');
+          wishlistBtn.style.color = '#6b7280';
+        }
+      }
+      updateHeaderCounts();
+    }
+
+    // Defensive: also handle clicks via event delegation
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.wishlist-btn');
+      if (!btn) return;
+      e.preventDefault();
+      const card = btn.closest('.product');
+      const name = card ? card.querySelector('h3')?.textContent?.trim() : undefined;
+      // Try to infer price from DOM if available
+      const priceText = card ? card.querySelector('.price')?.textContent || '' : '';
+      const priceNum = Number(String(priceText).replace(/[^0-9]/g,'') || 0);
+      if (name) {
+        toggleWishlist(name, priceNum, btn);
+      }
+    });
+
+    // Notification function
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      let backgroundColor;
+      
+      switch(type) {
+        case 'success':
+          backgroundColor = '#10b981';
+          break;
+        case 'error':
+          backgroundColor = '#ef4444';
+          break;
+        case 'warning':
+          backgroundColor = '#f59e0b';
+          break;
+        default:
+          backgroundColor = '#3b82f6';
+      }
+      
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${backgroundColor};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        font-weight: 500;
+        animation: slideIn 0.3s ease;
+        max-width: 300px;
+        word-wrap: break-word;
+      `;
+      notification.textContent = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 300);
+      }, 4000);
+    }
+
+    // Test cart function
+    function testAddToCart() {
+      // Use the core engine so counters and modal update correctly
+      if (typeof coreAddToCart === 'function') {
+        coreAddToCart('Test Product', 1000);
+        showNotification('Test Product added to cart', 'success');
+      } else {
+        showNotification('Cart engine not loaded', 'error');
+      }
+    }
+
+    // Clear cart function
+    function clearCart() {
+      if (confirm('Are you sure you want to clear all items from your cart?')) {
+        localStorage.setItem('cart', JSON.stringify([]));
+        updateCartDisplay();
+        showNotification('Cart cleared successfully!', 'success');
+      }
+    }
+
+    // Cart modal functions
+    function showCartModal() {
+      const modal = document.getElementById('cartModal');
+      const cart = getCart();
+      
+      if (cart.length === 0) {
+        showNotification('Your cart is empty!', 'warning');
+        return;
+      }
+      
+      updateCartModalContent();
+      modal.style.display = 'flex';
+    }
+
+    function closeCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.style.display = 'none';
+    }
+
+    function updateCartModalContent() {
+      const cart = getCart();
+      const modalBody = document.getElementById('cartModalBody');
+      
+      if (cart.length === 0) {
+        modalBody.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+        return;
+      }
+      
+      let totalAmount = 0;
+      let totalItems = 0;
+      
+      modalBody.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.quantity;
+        totalAmount += itemTotal;
+        totalItems += item.quantity;
+        
+        return `
+          <div class="cart-modal-item">
+            <div class="item-info">
+              <h4>${item.name}</h4>
+              <p>₹${item.price.toLocaleString()} × ${item.quantity}</p>
+            </div>
+            <div class="item-total">
+              ₹${itemTotal.toLocaleString()}
+            </div>
+          </div>
+        `;
+      }).join('') + `
+        <div class="cart-modal-summary">
+          <div class="summary-row">
+            <span>Total Items: <strong>${totalItems}</strong></span>
+            <span>Total Amount: <strong>₹${totalAmount.toLocaleString()}</strong></span>
+          </div>
+        </div>
+      `;
+    }
+
+    function goToCart() {
+      window.location.href = 'cart.html';
+    }
+
+    // Add click event to cart link to show modal
+    document.addEventListener('DOMContentLoaded', function() {
+      const cartLink = document.querySelector('.cart-link');
+      if (cartLink) {
+        cartLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          showCartModal();
+        });
+      }
+    });
+
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+      @keyframes slideOut {
+        from { transform: translateX(0); opacity: 1; }
+        to { transform: translateX(100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
+
+      
+      

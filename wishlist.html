@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ElectroMart - Wishlist</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="assets/css/professional.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Professional Header -->
+  <header class="professional-header" id="mainHeader">
+    <div class="header-container">
+      <div class="logo-section">
+        <img src="assets/images/Logo.jpg" alt="ElectroMart Logo" class="logo">
+        <div class="brand-text">ElectroMart</div>
+      </div>
+      <nav class="professional-nav">
+        <ul class="nav-links">
+          <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+          <li><a href="products.html"><i class="fas fa-box"></i><span>Products</span></a></li>
+          <li><a href="cart.html" class="cart-link"><i class="fas fa-shopping-cart"></i><span>Cart</span> <span class="cart-count cart-badge">0</span></a></li>
+          <li><a href="wishlist.html" class="active"><i class="fas fa-heart"></i><span>Wishlist</span> <span class="wishlist-badge">0</span></a></li>
+          <li><a href="About.html"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="max-width: 1100px; padding: 2rem;">
+    <h1 style="margin: 0 0 1rem 0; color: #0f172a;">My Wishlist</h1>
+    <p id="empty-wishlist" style="display:none; color:#64748b; padding: 2rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius: 12px; text-align:center;">Your wishlist is empty.</p>
+
+    <div id="wishlist-grid" class="product-grid" style="padding:0;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));"></div>
+  </main>
+
+  <footer class="professional-footer">
+    <div class="footer-container">
+      <div class="footer-section"><h3>ElectroMart</h3><p style="color: rgba(255,255,255,0.8);">Your trusted electronics store.</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2025 ElectroMart. All rights reserved.</p></div>
+  </footer>
+
+  <script src="assets/js/SCR.JS"></script>
+  <script>
+    function getWishlist() {
+      try { return JSON.parse(localStorage.getItem('wishlist') || '[]'); } catch { return []; }
+    }
+
+    function saveWishlist(items) {
+      try { localStorage.setItem('wishlist', JSON.stringify(items)); } catch {}
+      document.querySelectorAll('.wishlist-badge, #wishlistCount').forEach(el => { el.textContent = items.length; });
+    }
+
+    function removeFromWishlist(name) {
+      const items = getWishlist().filter(x => x.name !== name);
+      saveWishlist(items);
+      renderWishlist();
+    }
+
+    function resolveImage(name, image) {
+      // If image path exists and looks valid, use it directly
+      if (image && image.trim() && !image.includes('placeholder')) {
+        // Fix relative paths
+        if (image.startsWith('assets/')) return image;
+        if (image.startsWith('../assets/')) return image.replace('../', '');
+        if (image.startsWith('./assets/')) return image.replace('./', '');
+        // If it's just a filename, prepend the path
+        if (!image.startsWith('http') && !image.startsWith('/') && !image.includes('/')) {
+          return 'assets/images/' + image;
+        }
+        return image;
+      }
+      
+      // Map product names to images (matching exact paths from products.html)
+      const nameLower = (name || '').toLowerCase();
+      const imageMap = {
+        'smart led tv': 'assets/images/LED TV.webp',
+        'led tv': 'assets/images/LED TV.webp',
+        'smart tv 55 inch': 'assets/images/tv.jpg',
+        'smart tv': 'assets/images/tv.jpg',
+        'microwave oven': 'assets/images/Oven.jpg',
+        'microwave': 'assets/images/Oven.jpg',
+        'oven': 'assets/images/Oven.jpg',
+        'washing machine': 'assets/images/washing.jpg.jpg', // Exact match from products.html
+        'washing': 'assets/images/washing.jpg.jpg',
+        'refrigerator': 'assets/images/refrigerator.jpg',
+        'mobile phones': 'assets/images/mp.jpg.jpg', // Exact match from products.html
+        'mobile phone': 'assets/images/mp.jpg.jpg',
+        'mobile': 'assets/images/mp.jpg.jpg',
+        'smartphone': 'assets/images/mobilephone.jpg', // Exact match from products.html
+        'phone': 'assets/images/mobilephone.jpg',
+        'laptop': 'assets/images/laptop.jpg'
+      };
+      
+      // Try exact match first
+      if (imageMap[nameLower]) return imageMap[nameLower];
+      
+      // Try partial match (check if name contains key or vice versa)
+      for (const [key, imgPath] of Object.entries(imageMap)) {
+        if (nameLower.includes(key) || key.includes(nameLower)) {
+          return imgPath;
+        }
+      }
+      
+      // Default fallback
+      return 'assets/images/Logo.jpg';
+    }
+
+    function renderWishlist() {
+      const grid = document.getElementById('wishlist-grid');
+      const empty = document.getElementById('empty-wishlist');
+      const items = getWishlist();
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      grid.innerHTML = items.map(item => {
+        const imgSrc = resolveImage(item.name, item.image);
+        const safeName = (item.name || '').replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+        return `
+        <div class="product">
+          <div class="product-image-container">
+            <img src="${imgSrc}" alt="${item.name}" class="product-image" 
+                 onerror="this.onerror=null; this.src='assets/images/Logo.jpg'; this.style.objectFit='contain'; this.style.padding='20px';">
+            <button class="wishlist-btn" style="color:#ef4444" onclick="removeFromWishlist('${safeName}')" title="Remove from Wishlist">
+              <i class="fas fa-heart"></i>
+            </button>
+          </div>
+          <div class="product-info">
+            <h3>${item.name}</h3>
+            <p class="price">₹${Number(item.price || 0).toLocaleString()}</p>
+            <div class="product-actions">
+              <button class="btn-primary" onclick="coreAddToCart('${safeName}', ${Number(item.price || 0)}, '${imgSrc}')">
+                <i class="fas fa-shopping-cart"></i> Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // seed header badges
+      const items = getWishlist();
+      document.querySelectorAll('.wishlist-badge, #wishlistCount').forEach(el => { el.textContent = items.length; el.style.display = items.length > 0 ? 'inline-block' : 'none'; });
+      renderWishlist();
+    });
+  </script>
+</body>
+</html>
+
+
+

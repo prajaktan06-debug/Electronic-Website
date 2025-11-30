@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Checker - ElectroMart</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .image-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .image-card h3 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #f1f5f9;
+        }
+        .image-status {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status-error {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .status-loading {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .summary h2 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ ElectroMart Image Checker</h1>
+        
+        <div class="image-grid" id="imageGrid">
+            <!-- Images will be loaded here by JavaScript -->
+        </div>
+        
+        <div class="summary">
+            <h2>Image Status Summary</h2>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalImages">0</div>
+                    <div class="stat-label">Total Images</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="loadedImages">0</div>
+                    <div class="stat-label">Loaded Successfully</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="failedImages">0</div>
+                    <div class="stat-label">Failed to Load</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const images = [
+            { name: 'Logo', path: 'assets/images/Logo.jpg', alt: 'ElectroMart Logo' },
+            { name: 'LED TV', path: 'assets/images/LED TV.webp', alt: 'Smart LED TV' },
+            { name: 'Microwave Oven', path: 'assets/images/Oven.jpg', alt: 'Microwave Oven' },
+            { name: 'Washing Machine', path: 'assets/images/washing.jpg.jpg', alt: 'Washing Machine' },
+            { name: 'Mobile Phones', path: 'assets/images/mp.jpg.jpg', alt: 'Mobile Phones' },
+            { name: 'Laptop', path: 'assets/images/laptop.jpg', alt: 'Laptop' },
+            { name: 'Refrigerator', path: 'assets/images/refrigerator.jpg', alt: 'Refrigerator' },
+            { name: 'Smart TV', path: 'assets/images/tv.jpg', alt: 'Smart TV' },
+            { name: 'Smartphone', path: 'assets/images/mobilephone.jpg', alt: 'Smartphone' }
+        ];
+
+        let loadedCount = 0;
+        let failedCount = 0;
+
+        function createImageCard(image) {
+            const card = document.createElement('div');
+            card.className = 'image-card';
+            
+            card.innerHTML = `
+                <h3>${image.name}</h3>
+                <img src="${image.path}" alt="${image.alt}" class="image-preview" onload="handleImageLoad(this, '${image.name}')" onerror="handleImageError(this, '${image.name}')">
+                <div class="image-status status-loading" id="status-${image.name.replace(/\s+/g, '')}">Loading...</div>
+            `;
+            
+            return card;
+        }
+
+        function handleImageLoad(img, name) {
+            const status = document.getElementById(`status-${name.replace(/\s+/g, '')}`);
+            status.textContent = '✅ Loaded Successfully';
+            status.className = 'image-status status-success';
+            loadedCount++;
+            updateStats();
+        }
+
+        function handleImageError(img, name) {
+            const status = document.getElementById(`status-${name.replace(/\s+/g, '')}`);
+            status.textContent = '❌ Failed to Load';
+            status.className = 'image-status status-error';
+            failedCount++;
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('totalImages').textContent = images.length;
+            document.getElementById('loadedImages').textContent = loadedCount;
+            document.getElementById('failedImages').textContent = failedCount;
+        }
+
+        // Load all images
+        function loadImages() {
+            const grid = document.getElementById('imageGrid');
+            images.forEach(image => {
+                const card = createImageCard(image);
+                grid.appendChild(card);
+            });
+            updateStats();
+        }
+
+        // Start loading images when page loads
+        document.addEventListener('DOMContentLoaded', loadImages);
+    </script>
+</body>
+</html>
+
+
